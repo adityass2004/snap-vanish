@@ -1,0 +1,101 @@
+{
+  "manifest_version": 3,
+  "name": "Snap Vanish",
+  "version": "1.0.0",
+  "description": "Snap your fingers on a video call and turn to dust. Leaves an empty room behind and mutes your mic. Fully local.",
+  "minimum_chrome_version": "114",
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Snap Vanish",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "commands": {
+    "snap-now": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "Snap now (vanish / reappear)"
+    },
+    "toggle-enabled": {
+      "suggested_key": {
+        "default": "Alt+Shift+V"
+      },
+      "description": "Turn Snap Vanish on or off"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*",
+        "https://teams.microsoft.com/*",
+        "https://teams.live.com/*",
+        "https://teams.cloud.microsoft/*",
+        "https://*.zoom.us/*",
+        "https://zoom.us/*",
+        "https://*.zoomgov.com/*"
+      ],
+      "js": [
+        "inject.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://meet.google.com/*",
+        "https://teams.microsoft.com/*",
+        "https://teams.live.com/*",
+        "https://teams.cloud.microsoft/*",
+        "https://*.zoom.us/*",
+        "https://zoom.us/*",
+        "https://*.zoomgov.com/*"
+      ],
+      "js": [
+        "bridge.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "engine.html",
+        "engine.js",
+        "inpaint-worker.js",
+        "wasm/*",
+        "models/*",
+        "seg/*",
+        "hands/*"
+      ],
+      "matches": [
+        "https://meet.google.com/*",
+        "https://teams.microsoft.com/*",
+        "https://teams.live.com/*",
+        "https://teams.cloud.microsoft/*",
+        "https://*.zoom.us/*",
+        "https://zoom.us/*",
+        "https://*.zoomgov.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

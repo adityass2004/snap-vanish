@@ -1,0 +1,13 @@
+# Auto detect text files and perform LF normalization
+* text=auto
+
+# Binary files - preserve exact bytes across all platforms
+*.wasm binary
+*.tflite binary
+*.binarypb binary
+*.data binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.ico binary
+*.onnx binary
